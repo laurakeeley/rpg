@@ -66,8 +66,8 @@ public class Game1 : Game
 
         player.anim = player.animations[0];
         
-        Enemy.enemies.Add(new Enemy(new Vector2(100,100), skull));
-        Enemy.enemies.Add(new Enemy(new Vector2(700,200), skull));
+        // Enemy.enemies.Add(new Enemy(new Vector2(100,100), skull));
+        // Enemy.enemies.Add(new Enemy(new Vector2(700,200), skull));
     }
 
     protected override void Update(GameTime gameTime)
@@ -77,6 +77,7 @@ public class Game1 : Game
             Exit();
 
         player.Update(gameTime);
+        Controller.Update(gameTime, skull);
         
         this.camera.Position = player.Position;
         this.camera.Update(gameTime);
