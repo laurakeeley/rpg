@@ -12,13 +12,22 @@ public class Projectile
     
     private Vector2 position;
     private int speed = 1000;
-    private int radius = 18;
+    public int radius = 18;
     private Dir direction;
+    private bool collided = false;
 
     public Projectile(Vector2 newPos, Dir newDir)
     {
         position = newPos;
         direction = newDir;
+    }
+
+    public bool Collided
+    {
+        get { return collided; }
+        set {
+            collided = value;
+        }
     }
 
     public Vector2 Position

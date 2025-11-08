@@ -65,6 +65,9 @@ public class Game1 : Game
         player.animations[3] = new SpriteAnimation(walkRight, 4, 8);
 
         player.anim = player.animations[0];
+        
+        Enemy.enemies.Add(new Enemy(new Vector2(100,100), skull));
+        Enemy.enemies.Add(new Enemy(new Vector2(700,200), skull));
     }
 
     protected override void Update(GameTime gameTime)
@@ -83,6 +86,27 @@ public class Game1 : Game
             proj.Update(gameTime);
         }
 
+        foreach (Enemy e in Enemy.enemies)
+        {
+            e.Update(gameTime, player.Position);
+        }
+
+        foreach (Projectile proj in Projectile.projectiles)
+        {
+            foreach (Enemy enemy in Enemy.enemies)
+            {
+                int sum = proj.radius + enemy.radius;
+                if (Vector2.Distance(proj.Position, enemy.Position) < sum)
+                {
+                    proj.Collided = true;
+                    enemy.Dead = true;
+                }
+            }
+        }
+        
+        Projectile.projectiles.RemoveAll(p => p.Collided);
+        Enemy.enemies.RemoveAll(e => e.Dead);
+
         base.Update(gameTime);
     }
 
@@ -93,6 +117,12 @@ public class Game1 : Game
         _spriteBatch.Begin(this.camera);
         _spriteBatch.Draw(background, new Vector2(-500, -500), Color.White);
         // _spriteBatch.Draw(playerSprite, player.Position, Color.White);
+
+        foreach (Enemy e in Enemy.enemies)
+        {
+            e.anim.Draw(_spriteBatch);
+        }
+        
         foreach (Projectile proj in Projectile.projectiles)
         {
             _spriteBatch.Draw(ball, new Vector2(proj.Position.X - 48, proj.Position.Y - 48), Color.White);
