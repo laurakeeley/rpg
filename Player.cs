@@ -67,16 +67,28 @@ public class Player
             switch (direction)
             {
                 case Dir.Right:
-                    position.X += speed * dt;
+                    if (position.X < 1275)
+                    {
+                        position.X += speed * dt;
+                    }
                     break;
                 case Dir.Left:
-                    position.X -= speed * dt;
+                    if (position.X > 225)
+                    {
+                        position.X -= speed * dt;
+                    }
                     break;
                 case Dir.Up:
-                    position.Y -= speed * dt;
+                    if (position.Y > 225)
+                    {
+                        position.Y -= speed * dt;
+                    }
                     break;
                 case Dir.Down:
-                    position.Y += speed * dt;
+                    if (position.Y < 1275)
+                    {
+                        position.Y += speed * dt;
+                    }
                     break;
             }
         }
