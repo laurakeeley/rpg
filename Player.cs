@@ -10,6 +10,7 @@ public class Player
     private int speed = 300;
     private Dir direction = Dir.Down;
     private bool isMoving = false;
+    private KeyboardState kStateOld = Keyboard.GetState();
 
     public SpriteAnimation anim;
 
@@ -99,7 +100,11 @@ public class Player
         anim = animations[(int)direction];
         
         anim.Position = new Vector2(position.X - 48, position.Y - 48);
-        if (isMoving)
+        if (kState.IsKeyDown(Keys.Space))
+        {
+            anim.setFrame(0);
+        }
+        else if (isMoving)
         {
             anim.Update(gameTime);
         }
@@ -107,5 +112,19 @@ public class Player
         {
             anim.setFrame(1);
         }
+
+        if (kState.IsKeyDown(Keys.Space))
+        {
+            isMoving = false;
+        }
+
+        if (kState.IsKeyDown(Keys.Space) && kStateOld.IsKeyUp(Keys.Space))
+        {
+            //Class.list.add(new Class Constructor (player position, player direction)
+            Projectile.projectiles.Add(new Projectile(position, direction));
+            
+        }
+        
+        kStateOld = kState;
     }
 }
